@@ -6,12 +6,12 @@ const { startupScreen } = require('../../util/boot.js');
 const disbotapi = require("disbotapi")
 let i = 0;
 
-module.exports = (client, Hyperz, config, con) =>{
+module.exports = (client, config, con) =>{
 
     // Set max listeners for Node Process and grab unhandled rejections
     process.setMaxListeners(20);
 	process.on('unhandledRejection', (err) => {console.log(err)});
-	
+
     // Set dependent variables up here
     var looper;
     var bigdogstatus;
@@ -55,9 +55,9 @@ module.exports = (client, Hyperz, config, con) =>{
 
         // Set the bots default status
         changeStatus(client);
-    
+
         async function bigFuckingBen(client, config, moment, fs, ms, con, bigdogstatus, looper) {
-            
+
             // Grab the current time
             let datetime = moment().format('HH:mm A');
 
@@ -65,7 +65,7 @@ module.exports = (client, Hyperz, config, con) =>{
             if(datetime.includes(`:00`)) {
                 getDicked(client, config, moment, fs, ms, con, bigdogstatus, looper)
             }
-    
+
         };
 
         async function getDicked(client, config, moment, fs, ms, con, bigdogstatus, looper) {
@@ -90,14 +90,14 @@ module.exports = (client, Hyperz, config, con) =>{
                                         await con.query(`UPDATE guilds SET chan='none' WHERE id='${data.id}'`, async (err, row) => {
                                             if(err) throw err;
                                         });
-                                    }       
+                                    }
 
                                     // If the voice channel has at-least 1 member in it, continue
                                     if(bigdogstatus.members.size >= 1) {
 
                                         // Run the connector to begin play process
                                         connector(client, config, bigdogstatus, fs, ms, con, data);
-                                    
+
                                     }
 
 
@@ -136,14 +136,14 @@ module.exports = (client, Hyperz, config, con) =>{
         } catch(e) {
             if(config.main_config.debugmode) return console.log(e);
         }
-    
+
         };
 
         async function connector(client, config, bigdogstatus, fs, ms, con, data) {
 
             let list = ['../../util/audio/output1.ogg', '../../util/audio/output2.ogg', '../../util/audio/output3.ogg', '../../util/audio/output4.ogg', '../../util/audio/output5.ogg', '../../util/audio/output6.ogg', '../../util/audio/output7.ogg', '../../util/audio/output8.ogg', '../../util/audio/output9.ogg', '../../util/audio/output10.ogg', '../../util/audio/output11.ogg', '../../util/audio/output12.ogg', '../../util/audio/output13.ogg', '../../util/audio/output14.ogg', '../../util/audio/output15.ogg', '../../util/audio/output16.ogg'];
             let audioFinder = list[Math.floor(list.length * Math.random())];
-            
+
             // Join the voice channel
             await bigdogstatus.join().then(async connection => {
                 // Start playing the file
@@ -164,7 +164,7 @@ module.exports = (client, Hyperz, config, con) =>{
 
                     console.log(e)
 
-                   
+
                     // If error on this event, set the channel to none
                     await con.query(`SELECT * FROM guilds WHERE id='${data.id}'`, async (err, row) => {
                         if(err) throw err;
@@ -178,13 +178,13 @@ module.exports = (client, Hyperz, config, con) =>{
                             }
                         }
                     });
-                    
+
                 }
-            
+
             });
-    
+
         };
-    
+
         async function changeStatus(client) {
             // Change back to default presence from bot-start
             await client.user.setPresence({
@@ -194,7 +194,7 @@ module.exports = (client, Hyperz, config, con) =>{
                 },
                 status: `idle`
             });
-    
+
         };
 
 }

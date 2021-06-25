@@ -1,28 +1,30 @@
+const {MessageEmbed} = require('discord.js');
+
 module.exports = {
     name: 'suggest',
     description: 'Create a suggestion for Big Benjamin.',
     aliases: ['idea', 'feature'],
-    async execute(client, message, args, Hyperz, config, con){
+    async execute(client, message, args, config, con){
 
         if(message.channel.type === 'dm') {
             return message.channel.send(`Please use a server channel for commands.`)
         }
 
         const filter = m => m.author.id === message.author.id;
-        
-        const embedone = new Hyperz.MessageEmbed()
+
+        const embedone = new MessageEmbed()
         .setColor(`${config.main_config.colorhex}`)
         .setDescription(`What is your suggestion?\nType \`end\` to cancel.`)
         .setTimestamp()
         .setFooter(`${config.main_config.copyright}`)
 
-        const embedtwo = new Hyperz.MessageEmbed()
+        const embedtwo = new MessageEmbed()
         .setColor(`${config.main_config.colorhex}`)
         .setDescription(`Your suggestion has been submitted!`)
         .setTimestamp()
         .setFooter(`${config.main_config.copyright}`)
 
-        const embedthree = new Hyperz.MessageEmbed()
+        const embedthree = new MessageEmbed()
         .setColor(`${config.main_config.colorhex}`)
         .setDescription(`Cancelling command now...`)
         .setTimestamp()
@@ -42,7 +44,7 @@ module.exports = {
                         let answer = collected2.first().content
                         let logger = await client.channels.cache.get(`856221390549155850`)
 
-                        const embedfour = new Hyperz.MessageEmbed()
+                        const embedfour = new MessageEmbed()
                         .setColor(`${config.main_config.colorhex}`)
 			.setTitle(`New Suggestion Recieved!`)
                         .setDescription(`**User:** ${message.author.tag} - (${message.author.id})\n**Guild:** ${message.guild.name} - (${message.guild.id})\n\n**Suggestion:** \n${answer}`)

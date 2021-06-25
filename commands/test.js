@@ -1,14 +1,16 @@
+const {MessageEmbed} = require('discord.js');
+
 module.exports = {
     name: 'test',
     description: 'Pings the bot.',
     aliases: ['debug', 'demo'],
-    async execute(client, message, args, Hyperz, config, con){
+    async execute(client, message, args, config, con){
 
         if(message.channel.type === 'dm') {
             return message.channel.send(`Please use a server channel for commands.`)
         }
 
-        const pingEmbed = new Hyperz.MessageEmbed()
+        const pingEmbed = new MessageEmbed()
         .setColor(config["main_config"].colorhex)
         .setThumbnail(`${client.user.avatarURL({ dynamic: true })}`)
         .setAuthor(`Testing Process`)
@@ -70,7 +72,7 @@ module.exports = {
                                 });
                                 console.log(`\n\n-----------------------\n${data.chan} from ${data.guild} was marked as undefined.\n-----------------------\n\n`)
                             }
-                        
+
                         } catch(e) {
                             if(config.main_config.debugmode) return console.log(e);
                         }

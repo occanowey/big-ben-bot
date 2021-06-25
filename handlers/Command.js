@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-module.exports = (client, Hyperz, config, con) =>{
+module.exports = (client, config, con) =>{
     const commandfiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
 
     for(const file of commandfiles){

@@ -1,7 +1,7 @@
 const fs = require('fs');
 
-module.exports = async (client, Hyperz, config, con, guild) =>{
-    
+module.exports = async (client, config, con, guild) =>{
+
     await con.query(`DELETE FROM guilds WHERE id='${guild.id}'`, async (err, row) => {
         if(err) throw err;
     });
@@ -17,7 +17,7 @@ module.exports = async (client, Hyperz, config, con, guild) =>{
                 },
                 status: `idle`
             });
-    
+
         };
 
 

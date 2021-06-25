@@ -1,12 +1,12 @@
-const Hyperz = require('discord.js');
+const Discord = require('discord.js');
 const config = require('./config.json');
-const client = new Hyperz.Client();
+const client = new Discord.Client();
 const { createConnection } = require('mysql')
 const con = createConnection(config["mysql"]);
 const colors = require(`chalk`)
 
-client.commands = new Hyperz.Collection();
-client.events = new Hyperz.Collection();
+client.commands = new Discord.Collection();
+client.events = new Discord.Collection();
 
 con.connect(err => {
     // Console log if there is an error
@@ -17,7 +17,7 @@ con.connect(err => {
 });
 
 ['Command', 'Event'].forEach(handler =>{
-    require(`./handlers/${handler}`)(client, Hyperz, config, con)
+    require(`./handlers/${handler}`)(client, config, con)
 })
 
 

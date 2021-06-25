@@ -1,10 +1,10 @@
 const fs = require('fs');
 const config = require('../../config.json');
 
-module.exports = async (client, Hyperz, config, con, channel) => {
+module.exports = async (client, config, con, channel) => {
 
     try {
-    
+
         if(channel.type != 'voice') return;
 
         await con.query(`SELECT * FROM guilds WHERE chan='${channel.id}'`, async (err, row) => {

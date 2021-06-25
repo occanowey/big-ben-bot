@@ -1,8 +1,10 @@
+const {MessageEmbed} = require('discord.js');
+
 module.exports = {
     name: 'dm',
     description: 'Message a user via the bot.',
     aliases: ['message'],
-    async execute(client, message, args, Hyperz, config, con){
+    async execute(client, message, args, config, con){
 
         try {
 
@@ -38,7 +40,7 @@ module.exports = {
                         message.delete()
                     }).catch(e => {});
 
-                    const mail = new Hyperz.MessageEmbed()
+                    const mail = new MessageEmbed()
                     .setColor(config["main_config"].colorhex)
                     .setTitle(`📬 You've Got Mail!`)
                     .setDescription(`${args.slice(1).join(" ")}`)
@@ -55,7 +57,7 @@ module.exports = {
                     }
                 }
             });
-            
+
         } catch(e) {
             if(config.main_config.debugmode) return console.log(e);
         }

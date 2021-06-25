@@ -1,8 +1,10 @@
+const {MessageEmbed} = require('discord.js');
+
 module.exports = {
     name: 'setchan',
     description: 'Pings the bot.',
     aliases: ['chanset', 'channel', 'set', 'setchannel', 'channelset'],
-    async execute(client, message, args, Hyperz, config, con){
+    async execute(client, message, args, config, con){
 
         if(message.channel.type === 'dm') {
             return message.channel.send(`Please use a server channel for commands.`)
@@ -14,11 +16,11 @@ module.exports = {
             msg.delete({ timeout: 12000 })
             message.delete()
         }).catch(e => {});
-            
+
         var foundchannel;
 
         if(message.mentions.channels.first()) {
-            
+
             if(message.mentions.channels.first().type === 'dm') return message.channel.send(`ERROR: That is not a valid channel.`).then(m => {
                 m.delete({ timeout: 12000 })
                 message.delete()
@@ -63,13 +65,13 @@ module.exports = {
         await con.query(`UPDATE guilds SET chan='${foundchannel.id}' WHERE id='${message.guild.id}'`, async (err, row) => {
             if(err) throw err;
 
-            const pingEmbed = new Hyperz.MessageEmbed()
+            const pingEmbed = new MessageEmbed()
             .setColor(config["main_config"].colorhex)
             .setAuthor(`${message.author.tag}`, `${message.author.displayAvatarURL()}`, `${config["other_configuration"].serverinvite}`)
             .setDescription(`The channel for this guild has been updated to \`${foundchannel.name}\``)
             .setTimestamp()
             .setFooter(`${config.main_config.copyright}`)
-            
+
             message.channel.send(pingEmbed).then(msg => msg.delete({ timeout: 10000 })).catch(e => {if(config["main_config"].debugmode) return console.log(e);});
             message.delete().catch(e => {if(config["main_config"].debugmode) return console.log(e);});
         });

@@ -1,14 +1,16 @@
+const {MessageEmbed} = require('discord.js');
+
 module.exports = {
     name: 'help',
     description: 'Shows all commands for the bot.',
     aliases: ['helpmenu', 'helpme'],
-    async execute(client, message, args, Hyperz, config, con){
+    async execute(client, message, args, config, con){
 
         if(message.channel.type === 'dm') {
             return message.channel.send(`Please use a server channel for commands.`)
         }
 
-        const page = new Hyperz.MessageEmbed()
+        const page = new MessageEmbed()
         .setTitle(`${client.user.username} Help Menu`)
         .setColor(`${config["main_config"].colorhex}`)
         .setAuthor(`${message.author.tag}`, `${message.author.displayAvatarURL()}`, `${config["other_configuration"].serverinvite}`)
@@ -21,7 +23,7 @@ module.exports = {
         )
         .setTimestamp()
         .setFooter(`${config.main_config.copyright}`)
-        
+
         message.channel.send(page).then(msg => {
             msg.delete({ timeout: 30000 })
             message.delete()

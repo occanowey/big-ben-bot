@@ -1,8 +1,10 @@
+const {MessageEmbed} = require('discord.js');
+
 module.exports = {
     name: 'logs',
     description: 'Set a logging channel.',
     aliases: ['log', 'logging', 'setlogs', 'setlog'],
-    async execute(client, message, args, Hyperz, config, con){
+    async execute(client, message, args, config, con){
 
         if(message.channel.type === 'dm') {
             return message.channel.send(`Please use a server channel for commands.`);
@@ -48,13 +50,13 @@ module.exports = {
         await con.query(`UPDATE guilds SET logs='${foundchannel.id}' WHERE id='${message.guild.id}'`, async (err, row) => {
             if(err) throw err;
 
-            const pingEmbed = new Hyperz.MessageEmbed()
+            const pingEmbed = new MessageEmbed()
             .setColor(config["main_config"].colorhex)
             .setAuthor(`${message.author.tag}`, `${message.author.displayAvatarURL()}`, `${config["other_configuration"].serverinvite}`)
             .setDescription(`The logs channel for this guild has been updated to \`${foundchannel.name}\``)
             .setTimestamp()
             .setFooter(`${config.main_config.copyright}`)
-            
+
             message.channel.send(pingEmbed).then(msg => msg.delete({ timeout: 10000 })).catch(e => {if(config["main_config"].debugmode) return console.log(e);});
             message.delete().catch(e => {if(config["main_config"].debugmode) return console.log(e);});
         });
