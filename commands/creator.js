@@ -5,11 +5,6 @@ module.exports = {
     description: 'A Command.',
     aliases: ['credits', 'hyperz'],
     async execute(client, message, args, config, con){
-
-        if(message.channel.type === 'dm') {
-            return message.channel.send(`Please use a server channel for commands.`)
-        }
-
         const pingEmbed = new MessageEmbed()
         .setColor(config["main_config"].colorhex)
         .setAuthor(`${message.author.tag}`, `${message.author.displayAvatarURL()}`, `${config["other_configuration"].serverinvite}`)

@@ -5,11 +5,6 @@ module.exports = {
     description: 'Pings the bot.',
     aliases: ['chanset', 'channel', 'set', 'setchannel', 'channelset'],
     async execute(client, message, args, config, con){
-
-        if(message.channel.type === 'dm') {
-            return message.channel.send(`Please use a server channel for commands.`)
-        }
-
         if (message.member.hasPermission('ADMINISTRATOR')) {
 
         if(!args[0]) return message.channel.send(`ERROR: Please include a voice channel in your command.`).then(msg => {

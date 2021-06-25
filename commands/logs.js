@@ -5,11 +5,6 @@ module.exports = {
     description: 'Set a logging channel.',
     aliases: ['log', 'logging', 'setlogs', 'setlog'],
     async execute(client, message, args, config, con){
-
-        if(message.channel.type === 'dm') {
-            return message.channel.send(`Please use a server channel for commands.`);
-        }
-
         if (message.member.hasPermission('ADMINISTRATOR')) {
 
         var foundchannel;

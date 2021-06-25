@@ -2,7 +2,6 @@ const fs = require('fs');
 const config = require('../../config.json');
 
 module.exports = (client, config, con, message) => {
-
     if(message.author.bot) return;
 
     if(message.channel.type === 'dm') {

@@ -5,11 +5,6 @@ module.exports = {
     description: 'Shows all commands for the bot.',
     aliases: ['helpmenu', 'helpme'],
     async execute(client, message, args, config, con){
-
-        if(message.channel.type === 'dm') {
-            return message.channel.send(`Please use a server channel for commands.`)
-        }
-
         const page = new MessageEmbed()
         .setTitle(`${client.user.username} Help Menu`)
         .setColor(`${config["main_config"].colorhex}`)

@@ -5,11 +5,6 @@ module.exports = {
     description: 'Create a suggestion for Big Benjamin.',
     aliases: ['idea', 'feature'],
     async execute(client, message, args, config, con){
-
-        if(message.channel.type === 'dm') {
-            return message.channel.send(`Please use a server channel for commands.`)
-        }
-
         const filter = m => m.author.id === message.author.id;
 
         const embedone = new MessageEmbed()

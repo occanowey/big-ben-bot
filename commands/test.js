@@ -5,11 +5,6 @@ module.exports = {
     description: 'Pings the bot.',
     aliases: ['debug', 'demo'],
     async execute(client, message, args, config, con){
-
-        if(message.channel.type === 'dm') {
-            return message.channel.send(`Please use a server channel for commands.`)
-        }
-
         const pingEmbed = new MessageEmbed()
         .setColor(config["main_config"].colorhex)
         .setThumbnail(`${client.user.avatarURL({ dynamic: true })}`)

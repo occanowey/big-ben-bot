@@ -7,11 +7,6 @@ module.exports = {
     async execute(client, message, args, config, con){
 
         try {
-
-            if(message.channel.type === 'dm') {
-                return message.channel.send(`Please use a server channel for commands.`)
-            }
-
             const array = ['704094587836301392', '759247388606070794']
 
 
