@@ -4,7 +4,7 @@ module.exports = {
     name: 'setchan',
     description: 'Pings the bot.',
     aliases: ['chanset', 'channel', 'set', 'setchannel', 'channelset'],
-    async execute(client, message, args, config, con){
+    async execute(client, message, args, config, db){
         if (message.member.hasPermission('ADMINISTRATOR')) {
 
         if(!args[0]) return message.channel.send(`ERROR: Please include a voice channel in your command.`).then(msg => {
@@ -57,7 +57,7 @@ module.exports = {
             }).catch(e => {});
         }
 
-        await con.query(`UPDATE guilds SET chan='${foundchannel.id}' WHERE id='${message.guild.id}'`, async (err, row) => {
+        await db.query(`UPDATE guilds SET chan='${foundchannel.id}' WHERE id='${message.guild.id}'`, async (err, row) => {
             if(err) throw err;
 
             const pingEmbed = new MessageEmbed()

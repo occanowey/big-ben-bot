@@ -4,7 +4,7 @@ module.exports = {
     name: 'test',
     description: 'Pings the bot.',
     aliases: ['debug', 'demo'],
-    async execute(client, message, args, config, con){
+    async execute(client, message, args, config, db){
         const pingEmbed = new MessageEmbed()
         .setColor(config["main_config"].colorhex)
         .setThumbnail(`${client.user.avatarURL({ dynamic: true })}`)
@@ -24,7 +24,7 @@ module.exports = {
                 } catch(e) {}
             }
 
-            await con.query(`SELECT * FROM guilds WHERE id='${message.guild.id}'`, async (err, rows) => {
+            await db.query(`SELECT * FROM guilds WHERE id='${message.guild.id}'`, async (err, rows) => {
                 if(err) throw err;
 
                 for(let data of rows) {
@@ -38,7 +38,7 @@ module.exports = {
                                 try {
 
                                         if(bigdogstatus.type === 'dm') {
-                                            await con.query(`UPDATE guilds SET chan='none' WHERE id='${data.id}'`, async (err, row) => {
+                                            await db.query(`UPDATE guilds SET chan='none' WHERE id='${data.id}'`, async (err, row) => {
                                                 if(err) throw err;
                                             });
                                         } else {
@@ -62,7 +62,7 @@ module.exports = {
                                     if(config.main_config.debugmode) return console.log(e);
                                 }
                             } else {
-                                await con.query(`UPDATE guilds SET chan='none' WHERE id='${data.id}'`, async (err, row) => {
+                                await db.query(`UPDATE guilds SET chan='none' WHERE id='${data.id}'`, async (err, row) => {
                                     if(err) throw err;
                                 });
                                 console.log(`\n\n-----------------------\n${data.chan} from ${data.guild} was marked as undefined.\n-----------------------\n\n`)

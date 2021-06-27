@@ -1,7 +1,7 @@
 const fs = require('fs');
 const config = require('../../config.json');
 
-module.exports = (client, config, con, message) => {
+module.exports = (client, config, db, message) => {
     if(message.author.bot) return;
 
     if(message.channel.type === 'dm') {
@@ -16,5 +16,5 @@ module.exports = (client, config, con, message) => {
 
     const command = client.commands.get(cmd) || client.commands.find(a => a.aliases.includes(cmd));
 
-    if(command) command.execute(client, message, args, config, con)
+    if(command) command.execute(client, message, args, config, db)
 }

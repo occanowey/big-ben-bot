@@ -4,7 +4,7 @@ module.exports = {
     name: 'version',
     description: 'A Command.',
     aliases: ['v'],
-    async execute(client, message, args, config, con){
+    async execute(client, message, args, config, db){
         const pingEmbed = new MessageEmbed()
         .setColor(config["main_config"].colorhex)
         .setAuthor(`${message.author.tag}`, `${message.author.displayAvatarURL()}`, `${config["other_configuration"].serverinvite}`)

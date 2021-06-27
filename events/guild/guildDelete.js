@@ -1,8 +1,8 @@
 const fs = require('fs');
 
-module.exports = async (client, config, con, guild) =>{
+module.exports = async (client, config, db, guild) =>{
 
-    await con.query(`DELETE FROM guilds WHERE id='${guild.id}'`, async (err, row) => {
+    await db.query(`DELETE FROM guilds WHERE id='${guild.id}'`, async (err, row) => {
         if(err) throw err;
     });
 

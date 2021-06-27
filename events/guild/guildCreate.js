@@ -1,22 +1,22 @@
 const fs = require('fs');
 
-module.exports = async (client, config, con, guild) =>{
+module.exports = async (client, config, db, guild) =>{
 
-    await con.query(`SELECT * FROM guilds WHERE id='${guild.id}'`, async (err, row) => {
+    await db.query(`SELECT * FROM guilds WHERE id='${guild.id}'`, async (err, row) => {
         if(err) throw err;
         if(!row[0]) {
-            await con.query(`INSERT INTO guilds (id, chan, logs) VALUES ('${guild.id}', 'none', 'none')`, async (err, row) => {
+            await db.query(`INSERT INTO guilds (id, chan, logs) VALUES ('${guild.id}', 'none', 'none')`, async (err, row) => {
                 if(err) throw err;
             });
         } else if(row[0]) {
             if(row[0].chan != 'none') {
-                await con.query(`UPDATE guilds SET chan='none' WHERE id='${guild.id}'`, async (err, row) => {
+                await db.query(`UPDATE guilds SET chan='none' WHERE id='${guild.id}'`, async (err, row) => {
                     if(err) throw err;
                 });
             }
 
             if(row[0].logs != 'none') {
-                await con.query(`UPDATE guilds SET logs='none' WHERE id='${guild.id}'`, async (err, row) => {
+                await db.query(`UPDATE guilds SET logs='none' WHERE id='${guild.id}'`, async (err, row) => {
                     if(err) throw err;
                 });
             }

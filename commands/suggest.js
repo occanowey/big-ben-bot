@@ -4,7 +4,7 @@ module.exports = {
     name: 'suggest',
     description: 'Create a suggestion for Big Benjamin.',
     aliases: ['idea', 'feature'],
-    async execute(client, message, args, config, con){
+    async execute(client, message, args, config, db){
         const filter = m => m.author.id === message.author.id;
 
         const embedone = new MessageEmbed()

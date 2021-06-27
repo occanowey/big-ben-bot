@@ -2,13 +2,13 @@ const Discord = require('discord.js');
 const config = require('./config.json');
 const client = new Discord.Client();
 const { createConnection } = require('mysql')
-const con = createConnection(config["mysql"]);
+const db = createConnection(config["mysql"]);
 const colors = require(`chalk`)
 
 client.commands = new Discord.Collection();
 client.events = new Discord.Collection();
 
-con.connect(err => {
+db.connect(err => {
     // Console log if there is an error
     if (err) return console.log(err);
 
@@ -17,7 +17,7 @@ con.connect(err => {
 });
 
 ['Command', 'Event'].forEach(handler =>{
-    require(`./handlers/${handler}`)(client, config, con)
+    require(`./handlers/${handler}`)(client, config, db)
 })
 
 

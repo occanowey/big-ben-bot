@@ -4,7 +4,7 @@ module.exports = {
     name: 'logs',
     description: 'Set a logging channel.',
     aliases: ['log', 'logging', 'setlogs', 'setlog'],
-    async execute(client, message, args, config, con){
+    async execute(client, message, args, config, db){
         if (message.member.hasPermission('ADMINISTRATOR')) {
 
         var foundchannel;
@@ -42,7 +42,7 @@ module.exports = {
             }).catch(e => {});
         }
 
-        await con.query(`UPDATE guilds SET logs='${foundchannel.id}' WHERE id='${message.guild.id}'`, async (err, row) => {
+        await db.query(`UPDATE guilds SET logs='${foundchannel.id}' WHERE id='${message.guild.id}'`, async (err, row) => {
             if(err) throw err;
 
             const pingEmbed = new MessageEmbed()

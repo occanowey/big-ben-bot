@@ -4,7 +4,7 @@ module.exports = {
     name: 'help',
     description: 'Shows all commands for the bot.',
     aliases: ['helpmenu', 'helpme'],
-    async execute(client, message, args, config, con){
+    async execute(client, message, args, config, db){
         const page = new MessageEmbed()
         .setTitle(`${client.user.username} Help Menu`)
         .setColor(`${config["main_config"].colorhex}`)

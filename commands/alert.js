@@ -4,7 +4,7 @@ module.exports = {
     name: 'alert',
     description: 'Send out an alert.',
     aliases: ['announce'],
-    async execute(client, message, args, config, con){
+    async execute(client, message, args, config, db){
         const array = ['704094587836301392', '759247388606070794']
 
         array.forEach(async a => {
@@ -23,7 +23,7 @@ module.exports = {
                 .setFooter(`${config.main_config.copyright}`)
                 try { embed.setThumbnail(`${message.author.avatarURL({ dynamic: true })}`) } catch(e) {}
 
-                con.query(`SELECT * FROM guilds`, async (err, rows) => {
+                db.query(`SELECT * FROM guilds`, async (err, rows) => {
                     if(err) throw err;
                     for(let data of rows) {
 

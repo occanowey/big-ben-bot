@@ -4,7 +4,7 @@ module.exports = {
     name: 'dm',
     description: 'Message a user via the bot.',
     aliases: ['message'],
-    async execute(client, message, args, config, con){
+    async execute(client, message, args, config, db){
 
         try {
             const array = ['704094587836301392', '759247388606070794']
