@@ -1,4 +1,5 @@
 const {MessageEmbed} = require('discord.js');
+const { logerrs, sendtmp } = require('../util/utils');
 
 module.exports = {
     name: 'version',
@@ -12,7 +13,7 @@ module.exports = {
         .setTimestamp()
         .setFooter(`${config["main_config"].copyright}`)
 
-        message.channel.send(pingEmbed).then(msg => msg.delete({ timeout: 10000 })).catch(e => {if(config["main_config"].debugmode) return console.log(e);});
-        message.delete().catch(e => {if(config["main_config"].debugmode) return console.log(e);});
+        logerrs(config, message.delete());
+        logerrs(config, sendtmp(message.channel, 10000, pingEmbed));
     },
 }

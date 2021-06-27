@@ -1,4 +1,5 @@
 const {MessageEmbed} = require('discord.js');
+const {logerrs, sendtmp} = require("../util/utils");
 
 module.exports = {
     name: 'alert',
@@ -9,11 +10,12 @@ module.exports = {
 
         array.forEach(async a => {
             if(a === message.author.id) {
+                if(!args[0]) {
+                    logerrs(config, message.delete());
+                    logerrs(config, sendtmp(message.channel, 12000, "Please include an announcement in your message."));
 
-                if(!args[0]) return message.channel.send(`Please include an announcement in your message.`).then(msg => {
-                    msg.delete({ timeout: 12000 })
-                    message.delete()
-                }).catch(e => {})
+                    return;
+                }
 
                 const embed = new MessageEmbed()
                 .setColor(config["main_config"].colorhex)
@@ -36,10 +38,9 @@ module.exports = {
                         }
 
                     }
-                    message.channel.send(`I have posted your announcement in all available channels.`).then(msg => {
-                        msg.delete({ timeout: 12000 })
-                        message.delete()
-                    }).catch(e => {});
+
+                    logerrs(config, message.delete());
+                    logerrs(config, sendtmp(message.channel, 12000, "I have posted your announcement in all available channels."));
                 });
             }
         });

@@ -1,4 +1,5 @@
 const {MessageEmbed} = require('discord.js');
+const { logerrs, sendtmp } = require('../util/utils');
 
 module.exports = {
     name: 'test',
@@ -42,8 +43,7 @@ module.exports = {
                                                 if(err) throw err;
                                             });
                                         } else {
-
-                                            message.channel.send(pingEmbed).then(msg => msg.delete({ timeout: 12000 })).catch(e => {if(config["main_config"].debugmode) return console.log(e);});
+                                            logerrs(config, sendtmp(message.channel, 12000, pingEmbed));
 
                                             await bigdogstatus.join().then(async connection => {
                                                 const dispatcher = await connection.play(require("path").join(__dirname, '../util/audio/test.ogg'));
@@ -72,10 +72,8 @@ module.exports = {
                             if(config.main_config.debugmode) return console.log(e);
                         }
                     } else {
-                        return message.channel.send(`You have not defined a channel for me to join. Run the \`b!setchan\` command.`).then(msg => {
-                            msg.delete({ timeout: 12000 })
-                            message.delete()
-                        }).catch(e => {});
+                        logerrs(config, message.delete());
+                        logerrs(config, sendtmp(message.channel, 12000, "You have not defined a channel for me to join. Run the `b!setchan` command."));
                     }
                 }
 
@@ -85,6 +83,6 @@ module.exports = {
             if(config.main_config.debugmode) return console.log(e);
         }
 
-        message.delete().catch(e => {if(config["main_config"].debugmode) return console.log(e);});
+        logerrs(config, message.delete());
     },
 }

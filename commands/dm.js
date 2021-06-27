@@ -1,26 +1,30 @@
 const {MessageEmbed} = require('discord.js');
+const {sendtmp, logerrs} = require("../util/utils");
 
 module.exports = {
     name: 'dm',
     description: 'Message a user via the bot.',
     aliases: ['message'],
     async execute(client, message, args, config, db){
-
-        try {
+        await logerrs(config, (async () => {
             const array = ['704094587836301392', '759247388606070794']
 
 
             array.forEach(async a => {
                 if(a === message.author.id) {
-                    if(!args[0]) return message.channel.send(`Please include a user to message in your command.`).then(msg => {
-                        msg.delete({ timeout: 12000 })
-                        message.delete()
-                    }).catch(e => {});
+                    if(!args[0]) {
+                        logerrs(config, message.delete());
+                        logerrs(config, sendtmp(message.channel, 12000, "Please include a user to message in your command."));
 
-                    if(!args[1]) return message.channel.send(`Please include a message for this user.`).then(msg => {
-                        msg.delete({ timeout: 12000 })
-                        message.delete()
-                    }).catch(e => {});
+                        return;
+                    }
+
+                    if(!args[1]) {
+                        logerrs(config, message.delete());
+                        logerrs(config, sendtmp(message.channel, 12000, "Please include a message for this user."));
+
+                        return;
+                    }
 
                     var foundmember;
 
@@ -30,10 +34,12 @@ module.exports = {
                         foundmember = await client.users.fetch(args[0])
                     }
 
-                    if(foundmember == undefined) return message.channel.send(`I was unable to find that user.`).then(msg => {
-                        msg.delete({ timeout: 12000 })
-                        message.delete()
-                    }).catch(e => {});
+                    if(foundmember == undefined) {
+                        logerrs(config, message.delete());
+                        logerrs(config, sendtmp(message.channel, 12000, "I was unable to find that user."));
+
+                        return;
+                    }
 
                     const mail = new MessageEmbed()
                     .setColor(config["main_config"].colorhex)
@@ -43,18 +49,10 @@ module.exports = {
                     .setFooter(`${config.main_config.copyright}`)
                     try { mail.setThumbnail(`${client.user.avatarURL({ dynamic: true })}`) } catch(e) {}
 
-                    try {
-                        await foundmember.send(mail).then(async letter => {
-                            await message.channel.send(`I have successfully messaged the user.`)
-                        }).catch(e => {});
-                    } catch(e) {
-                        if(config.main_config.debugmode) return console.log(e);
-                    }
+                    await foundmember.send(mail);
+                    await message.channel.send("I have successfully messaged the user.");
                 }
             });
-
-        } catch(e) {
-            if(config.main_config.debugmode) return console.log(e);
-        }
+        }));
     },
 }

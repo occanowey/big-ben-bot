@@ -1,4 +1,5 @@
 const {MessageEmbed} = require('discord.js');
+const { logerrs, sendtmp } = require('../util/utils');
 
 module.exports = {
     name: 'suggest',
@@ -31,10 +32,8 @@ module.exports = {
                 .then(async collected2 => {
                     let ress = collected2.first().content.toLowerCase()
                     if(ress === 'end') {
-                        message.channel.send(embedthree).then(msg => {
-                            msg.delete({ timeout: 8000 })
-                            message.delete()
-                        }).catch(e => {});
+                        logerrs(config, message.delete());
+                        logerrs(config, sendtmp(message.channel, 8000, embedthree));
                     } else {
                         let answer = collected2.first().content
                         let logger = await client.channels.cache.get(`856221390549155850`)
@@ -49,10 +48,9 @@ module.exports = {
 
                         try {
                             await logger.send(embedfour).catch(e => {});
-                            await message.channel.send(embedtwo).then(msg => {
-                                msg.delete({ timeout: 12000 })
-                                message.delete()
-                            }).catch(e => {});
+
+                            logerrs(config, message.delete());
+                            logerrs(config, sendtmp(message.channel, 12000, embedtwo));
                         } catch(e) {
                             if(config.main_config.debugmode) return console.log(e);
                         }

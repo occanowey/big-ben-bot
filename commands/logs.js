@@ -1,4 +1,5 @@
 const {MessageEmbed} = require('discord.js');
+const { logerrs, sendtmp } = require('../util/utils');
 
 module.exports = {
     name: 'logs',
@@ -17,10 +18,12 @@ module.exports = {
                 if(foundchannel == undefined) {
                     try {
                         let somechannel = await client.channels.cache.find(channel => channel.name === args.join(" "))
-                        if(somechannel == undefined) return message.channel.send(`ERROR: That is not a valid channel.`).then(m => {
-                            m.delete({ timeout: 12000 })
-                            message.delete()
-                        }).catch(e => {});
+                        if(somechannel == undefined) {
+                            logerrs(config, message.delete());
+                            logerrs(config, sendtmp(message.channel, 12000, "ERROR: That is not a valid channel."));
+
+                            return;
+                        }
                         foundchannel = await client.channels.cache.get(somechannel.id)
                     } catch(e) {
                         if(config.main_config.debugmode) return console.log(e);
@@ -29,17 +32,17 @@ module.exports = {
         }
 
         if(foundchannel == undefined) {
-            return message.channel.send(`ERROR: That is not a valid channel.`).then(m => {
-                m.delete({ timeout: 12000 })
-                message.delete()
-            }).catch(e => {});
+            logerrs(config, message.delete());
+            logerrs(config, sendtmp(message.channel, 12000, "ERROR: That is not a valid channel."));
+
+            return;
         }
 
         if(foundchannel.type != 'text') {
-            return message.channel.send(`ERROR: That is not a text channel.`).then(m => {
-                m.delete({ timeout: 12000 })
-                message.delete()
-            }).catch(e => {});
+            logerrs(config, message.delete());
+            logerrs(config, sendtmp(message.channel, 12000, "ERROR: That is not a text channel."));
+
+            return;
         }
 
         await db.query(`UPDATE guilds SET logs='${foundchannel.id}' WHERE id='${message.guild.id}'`, async (err, row) => {
@@ -52,15 +55,13 @@ module.exports = {
             .setTimestamp()
             .setFooter(`${config.main_config.copyright}`)
 
-            message.channel.send(pingEmbed).then(msg => msg.delete({ timeout: 10000 })).catch(e => {if(config["main_config"].debugmode) return console.log(e);});
-            message.delete().catch(e => {if(config["main_config"].debugmode) return console.log(e);});
+            logerrs(config, message.delete());
+            logerrs(config, sendtmp(message.channel, 10000, pingEmbed));
         });
 
     } else {
-        message.channel.send(`You are missing the permission(s) \`ADMINISTRATOR\``).then(m => {
-            m.delete({ timeout: 12000 })
-            message.delete()
-        }).catch(e => {});
+        logerrs(config, message.delete());
+        logerrs(config, sendtmp(message.channel, 12000, "You are missing the permission(s) `ADMINISTRATOR`"));
     }
     },
 }
